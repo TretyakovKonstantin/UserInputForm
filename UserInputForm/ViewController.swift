@@ -11,7 +11,7 @@ import UIKit
 let reuseIdentifierInput = "input"
 let reuseIdentifierUser = "user"
 
-var source = [User(surname: "Ivanov",  birthDate: "01.01.1995")]
+var source:[User] = []
 
 class InputCell: UITableViewCell {
     let nameTextField = UITextField()
@@ -96,7 +96,7 @@ class UserCell: UITableViewCell {
     let surName = UILabel()
     let birthDateLabel = UILabel()
     var nameLabel = UILabel()
-    
+    var isExpanded = false
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -109,8 +109,6 @@ class UserCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var isExpanded = false
-    
     func setFields(surname: String, dateOfBirth: String) {
         surName.text = surname
         birthDateLabel.text = dateOfBirth
@@ -119,7 +117,6 @@ class UserCell: UITableViewCell {
     func setFields(surname: String, name: String, dateOfBirth: String) {
         setFields(surname: surname, dateOfBirth: dateOfBirth)
         nameLabel.text = name
-        
         isExpanded = true
     }
     
@@ -180,7 +177,7 @@ extension ViewController: UITableViewDataSource {
         
         switch indexPath.section {
         case 0:
-            let inputCell = cell as! InputCell
+            break
     
         case 1:
             let userCell = cell as! UserCell
