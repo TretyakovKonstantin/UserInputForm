@@ -11,7 +11,7 @@ import UIKit
 let reuseIdentifierInput = "input"
 let reuseIdentifierUser = "user"
 
-var source = [User(name: "Catie",  birthDate: "01.01.1995")]
+var source = [User(surname: "Ivanov",  birthDate: "01.01.1995")]
 
 class InputCell: UITableViewCell {
     let nameTextField = UITextField()
@@ -41,9 +41,8 @@ class InputCell: UITableViewCell {
         
         birthdateTextField.borderStyle = .roundedRect
         birthdateTextField.placeholder = "date of birth"
-        submitButton.backgroundColor = .lightGray
-        
-        submitButton.titleLabel?.text = "add user"
+        submitButton.backgroundColor = .blue
+        submitButton.setTitle("addUser", for: .normal)
         
         self.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
         submitButton.addTarget(self, action: #selector(addUserButtonAction), for: .touchDown)
@@ -68,37 +67,79 @@ class InputCell: UITableViewCell {
         }
     }
     
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        let size = super.sizeThatFits(size)
+        return CGSize(width: size.width, height: 200 + 20)
+    }
+    
     @objc func addUserButtonAction(sender: UIButton!) {
-        guard let name = nameTextField.text , let birthDate = birthdateTextField.text else {
+        let surname = surnameTextField.text!
+        let birthDate = birthdateTextField.text!
+        guard !surname.isEmpty && !birthDate.isEmpty else {
             return
         }
-        print(birthdateTextField.text!)
-        //TODO change hardcode date
-        source += [User(name: name, birthDate: birthDate)]
+        
+        let user = User(surname: surname, birthDate: birthDate)
+        let name = nameTextField.text!
+        if !name.isEmpty {
+            user.name = name
+        }
+        source += [user]
+        surnameTextField.text = ""
+        nameTextField.text = ""
+        birthdateTextField.text = ""
         (self.superview as! UITableView).reloadData()
     }
 }
 
 class UserCell: UITableViewCell {
-    let nameLabel = UILabel()
+    let surName = UILabel()
     let birthDateLabel = UILabel()
-    var surnameLabel = UILabel()
+    var nameLabel = UILabel()
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(nameLabel)
+        contentView.addSubview(surName)
         contentView.addSubview(birthDateLabel)
+        contentView.addSubview(nameLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var isExpanded = false
+    
+    func setFields(surname: String, dateOfBirth: String) {
+        surName.text = surname
+        birthDateLabel.text = dateOfBirth
+    }
+    
+    func setFields(surname: String, name: String, dateOfBirth: String) {
+        setFields(surname: surname, dateOfBirth: dateOfBirth)
+        nameLabel.text = name
+        
+        isExpanded = true
+    }
+    
     override var frame: CGRect {
         didSet {
-            nameLabel.frame = CGRect(x: 20, y: 0, width: 150, height: 30)
-            birthDateLabel.frame = CGRect(x: frame.width - 170, y: 0, width: 150, height: 30)
+            var birthdayLabelY = 0
+            surName.frame = CGRect(x: 20, y: 0, width: 150, height: 30)
+            if (isExpanded) {
+                nameLabel.frame = CGRect(x: 20, y: 40, width: 150, height: 30)
+                birthdayLabelY = 20
+            }
+            birthDateLabel.frame = CGRect(x: frame.width - 170, y: CGFloat(birthdayLabelY), width: 150, height: 30)
+        }
+    }
+    
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        if isExpanded {
+            return CGSize(width: size.width, height: size.height + 80)
+        } else {
+            return size
         }
     }
 }
@@ -124,7 +165,6 @@ class ViewController: UIViewController {
         viewAsTable.register(InputCell.self, forCellReuseIdentifier: reuseIdentifierInput)
 
         viewAsTable.dataSource = self
-        viewAsTable.delegate = self
     }
 
 
@@ -145,10 +185,10 @@ extension ViewController: UITableViewDataSource {
         case 1:
             let userCell = cell as! UserCell
             let user = source[indexPath.row]
-            userCell.nameLabel.text = user.name
-            userCell.birthDateLabel.text = String(describing: user.birthDate)
-            if user.surname != nil {
-                userCell.surnameLabel.text = user.surname
+            if (user.name == nil) {
+                userCell.setFields(surname: user.surname, dateOfBirth: user.birthDate)
+            } else {
+                userCell.setFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
             }
         default:
             break
@@ -161,8 +201,3 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 220 : 44
-    }
-}
