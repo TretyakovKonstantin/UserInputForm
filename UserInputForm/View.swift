@@ -8,9 +8,9 @@
 
 import UIKit
 class InputCell: UITableViewCell {
-    let nameTextField = UITextField()
-    let surnameTextField = UITextField()
-    let birthdateTextField = UITextField()
+    private let nameTextField = UITextField()
+    private let surnameTextField = UITextField()
+    private let  birthdateTextField = UITextField()
     let submitButton = UIButton()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -79,10 +79,10 @@ class InputCell: UITableViewCell {
 }
 
 class UserCell: UITableViewCell {
-    let surName = UILabel()
-    let birthDateLabel = UILabel()
-    var nameLabel = UILabel()
-    var isExpanded = false
+    private let surName = UILabel()
+    private let birthDateLabel = UILabel()
+    private var nameLabel = UILabel()
+    private var isExpanded = false
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
