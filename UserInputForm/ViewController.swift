@@ -67,8 +67,8 @@ extension ViewController: UITableViewDataSource {
     }
     
     @objc func addUserButtonAction(sender: UIButton!) {
-        let userView = sender.superview as! InputCell
-        let (surname, name, birthDate) = userView.getTextFieldValues()
+        let inputView = viewAsTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! InputCell
+        let (surname, name, birthDate) = inputView.getTextFieldValues()
         
         guard !surname.isEmpty && !birthDate.isEmpty else {
             return
@@ -79,8 +79,8 @@ extension ViewController: UITableViewDataSource {
             user.name = name
         }
         source += [user]
-        userView.emptyAllFields()
-        reloadData()
+        inputView.emptyAllTextFields()
+        viewAsTable.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
