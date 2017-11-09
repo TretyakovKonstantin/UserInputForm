@@ -11,13 +11,13 @@ class InputCell: UITableViewCell {
     private let nameTextField = UITextField()
     private let surnameTextField = UITextField()
     private let  birthdateTextField = UITextField()
-    let submitButton = UIButton()
+    private let submitButton = UIButton()
+    @objc private var action: ((UIButton)->Void)?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(nameTextField)
         contentView.addSubview(surnameTextField)
-        
         
         let birthdayPicker = UIDatePicker()
         birthdayPicker.datePickerMode = .date
@@ -39,7 +39,11 @@ class InputCell: UITableViewCell {
         submitButton.setTitle("addUser", for: .normal)
         
         self.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
-        
+    }
+    
+    func setButtonAction(action: @escaping ((UIButton!) ->Void)) {
+        self.action = action
+        submitButton.addTarget(self, action: #selector(getter: self.action), for: .touchDown)
     }
     
     func emptyAllTextFields() {

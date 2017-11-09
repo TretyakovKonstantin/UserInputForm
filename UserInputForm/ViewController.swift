@@ -49,7 +49,8 @@ extension ViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             let inputCell = cell as! InputCell
-            inputCell.submitButton.addTarget(self, action: #selector(addUserButtonAction), for: .touchDown)
+            
+            inputCell.setButtonAction("")
             break
     
         case 1:
