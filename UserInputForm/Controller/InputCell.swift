@@ -57,7 +57,7 @@ class InputCell: UITableViewCell {
         birthdateTextField.text = ""
     }
     
-    func getTextFieldValues() -> (String, String, String) {
+    func textFieldValues() -> (surname: String, name: String, birthdate: String) {
         return (surnameTextField.text!, nameTextField.text!, birthdateTextField.text!)
     }
     

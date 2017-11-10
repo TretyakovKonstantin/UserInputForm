@@ -25,13 +25,13 @@ class UserCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setFields(surname: String, dateOfBirth: String) {
+    func fillInFields(surname: String, dateOfBirth: String) {
         surName.text = surname
         birthDateLabel.text = dateOfBirth
     }
     
-    func setFields(surname: String, name: String, dateOfBirth: String) {
-        setFields(surname: surname, dateOfBirth: dateOfBirth)
+    func fillInFields(surname: String, name: String, dateOfBirth: String) {
+        fillInFields(surname: surname, dateOfBirth: dateOfBirth)
         nameLabel.text = name
         isExpanded = true
     }

@@ -57,9 +57,9 @@ extension ViewController: UITableViewDataSource {
             let userCell = cell as! UserCell
             let user = source[indexPath.row]
             if (user.name == nil) {
-                userCell.setFields(surname: user.surname, dateOfBirth: user.birthDate)
+                userCell.fillInFields(surname: user.surname, dateOfBirth: user.birthDate)
             } else {
-                userCell.setFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
+                userCell.fillInFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
             }
         default:
             break
@@ -69,7 +69,7 @@ extension ViewController: UITableViewDataSource {
     
     @objc func addUserButtonAction(sender: UIButton!) {
         let inputView = viewAsTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! InputCell
-        let (surname, name, birthDate) = inputView.getTextFieldValues()
+        let (surname, name, birthDate) = inputView.textFieldValues()
         
         guard !surname.isEmpty && !birthDate.isEmpty else {
             return
