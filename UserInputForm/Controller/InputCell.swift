@@ -8,10 +8,39 @@
 
 import UIKit
 class InputCell: UITableViewCell {
-    private let nameTextField = UITextField()
-    private let surnameTextField = UITextField()
-    private let  birthdateTextField = UITextField()
-    private let submitButton = UIButton()
+    
+    private let nameTextField: UITextField = {
+        var name = UITextField()
+        name.borderStyle = .roundedRect
+        name.placeholder = "name"
+        return name
+    }()
+    
+    private var surnameTextField: UITextField = {
+        var surname = UITextField()
+        surname.borderStyle = .roundedRect
+        surname.placeholder = "surname"
+        return surname
+    }()
+    
+    private var birthdateTextField:UITextField = {
+        let birthdate = UITextField()
+        birthdate.borderStyle = .roundedRect
+        birthdate.placeholder = "date of birth"
+        
+        let birthdayPicker = UIDatePicker()
+        birthdayPicker.datePickerMode = .date
+        birthdate.inputView = birthdayPicker
+        return birthdate
+    }()
+    
+    private var submitButton:UIButton = {
+        let submit = UIButton()
+        submit.backgroundColor = .blue
+        submit.setTitle("addUser", for: .normal)
+        return submit
+    }()
+
     private var action: ((UIButton)->())?
     
     @objc private func addUserButtonAction(sender: UIButton!) {
@@ -22,26 +51,11 @@ class InputCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(nameTextField)
         contentView.addSubview(surnameTextField)
-        
-        let birthdayPicker = UIDatePicker()
-        birthdayPicker.datePickerMode = .date
-        birthdayPicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-        birthdateTextField.inputView = birthdayPicker
-        
         contentView.addSubview(birthdateTextField)
         contentView.addSubview(submitButton)
         
-        nameTextField.borderStyle = .roundedRect
-        nameTextField.placeholder = "name"
-        
-        surnameTextField.borderStyle = .roundedRect
-        surnameTextField.placeholder = "surname"
-        
-        birthdateTextField.borderStyle = .roundedRect
-        birthdateTextField.placeholder = "date of birth"
-        submitButton.backgroundColor = .blue
-        submitButton.setTitle("addUser", for: .normal)
-        
+        (birthdateTextField.inputView as! UIDatePicker).addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+
         self.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
     }
     
