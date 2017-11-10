@@ -12,7 +12,11 @@ class InputCell: UITableViewCell {
     private let surnameTextField = UITextField()
     private let  birthdateTextField = UITextField()
     private let submitButton = UIButton()
-    @objc private var action: ((UIButton)->Void)?
+    private var action: ((UIButton)->())?
+    
+    @objc private func addUserButtonAction(sender: UIButton!) {
+        action!(sender)
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,9 +45,10 @@ class InputCell: UITableViewCell {
         self.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
     }
     
-    func setButtonAction(action: @escaping ((UIButton!) ->Void)) {
+    func setButtonAction(action: @escaping (UIButton!)->()) {
         self.action = action
-        submitButton.addTarget(self, action: #selector(getter: self.action), for: .touchDown)
+        submitButton.addTarget(self, action: #selector(addUserButtonAction), for: .touchDown)
+        
     }
     
     func emptyAllTextFields() {
@@ -79,5 +84,4 @@ class InputCell: UITableViewCell {
         let size = super.sizeThatFits(size)
         return CGSize(width: size.width, height: 200 + 20)
     }
-    
 }

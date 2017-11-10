@@ -8,8 +8,8 @@
 
 import UIKit
 
-let reuseIdentifierInput = "input"
-let reuseIdentifierUser = "user"
+private let reuseIdentifierInput = "input"
+private let reuseIdentifierUser = "user"
 
 var source:[User] = []
 
@@ -50,7 +50,7 @@ extension ViewController: UITableViewDataSource {
         case 0:
             let inputCell = cell as! InputCell
             
-            inputCell.setButtonAction("")
+            inputCell.setButtonAction(action: addUserButtonAction)
             break
     
         case 1:
