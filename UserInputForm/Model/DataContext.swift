@@ -8,14 +8,19 @@
 
 import Foundation
 
-private var users:[User] = []
-
 class DataContext {
+    
+    private var users:[User] = []
+    
     func getUsers()->[User] {
         return users
     }
     
     func addUser(user: User) {
         users += [user]
+    }
+    
+    func addUsers(users: [User]) {
+        self.users += users
     }
 }

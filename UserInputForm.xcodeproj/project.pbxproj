@@ -12,6 +12,7 @@
 		CE2ED9EC1FB6255F00F0A702 /* DataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2ED9EB1FB6255F00F0A702 /* DataContext.swift */; };
 		CE2ED9EE1FB642E600F0A702 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2ED9ED1FB642E600F0A702 /* ViewModel.swift */; };
 		CE2ED9F01FB6435A00F0A702 /* SerializeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2ED9EF1FB6435A00F0A702 /* SerializeService.swift */; };
+		CE2ED9F21FB7535500F0A702 /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2ED9F11FB7535500F0A702 /* UserCardView.swift */; };
 		CE8DF9781FAE4E3A002F900C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DF9771FAE4E3A002F900C /* AppDelegate.swift */; };
 		CE8DF97A1FAE4E3A002F900C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DF9791FAE4E3A002F900C /* ViewController.swift */; };
 		CE8DF97D1FAE4E3A002F900C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8DF97B1FAE4E3A002F900C /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 		CE2ED9EB1FB6255F00F0A702 /* DataContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataContext.swift; sourceTree = "<group>"; };
 		CE2ED9ED1FB642E600F0A702 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		CE2ED9EF1FB6435A00F0A702 /* SerializeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerializeService.swift; sourceTree = "<group>"; };
+		CE2ED9F11FB7535500F0A702 /* UserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
 		CE8DF9741FAE4E3A002F900C /* UserInputForm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserInputForm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8DF9771FAE4E3A002F900C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE8DF9791FAE4E3A002F900C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,6 +52,9 @@
 		CE2ED9E51FB4D2D400F0A702 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE2ED9E71FB4D30200F0A702 /* InputUserView.swift */,
+				CE2ED9E91FB4D33900F0A702 /* UserCell.swift */,
+				CE2ED9F11FB7535500F0A702 /* UserCardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -57,8 +62,6 @@
 		CE2ED9E61FB4D2E400F0A702 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				CE2ED9E71FB4D30200F0A702 /* InputUserView.swift */,
-				CE2ED9E91FB4D33900F0A702 /* UserCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				CE2ED9E81FB4D30200F0A702 /* InputUserView.swift in Sources */,
 				CE2ED9EC1FB6255F00F0A702 /* DataContext.swift in Sources */,
 				CE2ED9F01FB6435A00F0A702 /* SerializeService.swift in Sources */,
+				CE2ED9F21FB7535500F0A702 /* UserCardView.swift in Sources */,
 				CE2ED9EA1FB4D33900F0A702 /* UserCell.swift in Sources */,
 				CE8DF97A1FAE4E3A002F900C /* ViewController.swift in Sources */,
 				CE8DF9781FAE4E3A002F900C /* AppDelegate.swift in Sources */,

@@ -7,3 +7,24 @@
 //
 
 import Foundation
+
+let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+let url = URL(fileURLWithPath: documentsPath + "/users.json")
+
+class SerializeService {
+    
+    
+    func encodeUsers(users: [User]) {
+        try! JSONEncoder().encode(users).write(to: url)
+    }
+    
+    func decodeUsers()->[User] {
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode([User].self, from: data)
+        } catch {
+            print("Can't load the data from JSON file.")
+        }
+        return []
+    }
+}

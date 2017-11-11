@@ -1,6 +1,6 @@
 import Foundation
 
-class User {
+class User: Codable {
     var name: String?
     var surname: String
     var birthDate: String

@@ -8,10 +8,15 @@
 
 import Foundation
 private var dataContext = DataContext()
+private var serializeService = SerializeService()
 
 class ViewModel {
-    func getData(index: Int)->User {
+    func getData(index: Int) -> User {
         return dataContext.getUsers()[index]
+    }
+    
+    func getData() -> [User] {
+        return dataContext.getUsers()
     }
     
     func addData(user: User) {
@@ -20,6 +25,14 @@ class ViewModel {
     
     func getDataCount() ->Int {
         return dataContext.getUsers().count
+    }
+    
+    func serializeData() {
+        serializeService.encodeUsers(users: dataContext.getUsers())
+    }
+    
+    func deserializeData() {
+        dataContext.addUsers(users: serializeService.decodeUsers())
     }
 }
 

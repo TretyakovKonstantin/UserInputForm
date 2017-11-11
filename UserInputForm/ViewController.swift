@@ -28,10 +28,10 @@ class ViewController: UIViewController {
         inputUserView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 220)
         view.addSubview(inputUserView)
         viewAsTable.tableHeaderView = inputUserView
-
         inputUserView.setButtonAction(action: addUserButtonAction)
-       
         view.backgroundColor = .white
+        
+        viewModel.deserializeData()
         
     }
     
@@ -47,6 +47,7 @@ class ViewController: UIViewController {
         
         inputUserView.emptyAllTextFields()
         viewAsTable.reloadData()
+        viewModel.serializeData()
     }
 
     override func viewDidLoad() {
