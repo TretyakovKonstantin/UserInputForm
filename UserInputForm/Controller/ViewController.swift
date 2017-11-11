@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         inputUserView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 220)
         view.addSubview(inputUserView)
         viewAsTable.tableHeaderView = inputUserView
-        inputUserView.setButtonAction(action: addUserButtonAction)
+        inputUserView.setButtonAction(action: handlePress)
         view.backgroundColor = .white
         
         viewModel.deserializeData()
@@ -49,7 +49,27 @@ class ViewController: UIViewController {
         viewAsTable.reloadData()
         viewModel.serializeData()
     }
+    
+    
+    @objc func handlePress(sender: UIButton!) {
+        //        var c = UIAlertController(title: "hey", message: "message", preferredStyle: .alert)
+        //        c.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        if presentingViewController == nil {
+        print("Hello, world")
+        let c = UserCardViewController()
+        let newNavigationController = UINavigationController(rootViewController: c)
+        navigationController?.pushViewController(c, animated: true)
 
+//        }
+//        else {
+//            hideModal()
+//        }
+    }
+    
+    @objc func hideModal() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewAsTable.register(UserCell.self, forCellReuseIdentifier: reuseIdentifierUser)
@@ -79,5 +99,9 @@ extension ViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+}
+
+extension ViewController: UITableViewDelegate {
+    
 }
 

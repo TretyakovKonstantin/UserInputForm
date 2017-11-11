@@ -7,10 +7,13 @@
 //
 
 import Foundation
-private var dataContext = DataContext()
-private var serializeService = SerializeService()
+
 
 class ViewModel {
+    
+    private var dataContext = DataContext()
+    private var serializeService = SerializeService()
+    
     func getData(index: Int) -> User {
         return dataContext.getUsers()[index]
     }

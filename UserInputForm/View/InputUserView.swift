@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class InputUserView: UIView{
+class InputUserView: UIView {
     
     private let nameTextField: UITextField = {
         var name = UITextField()
