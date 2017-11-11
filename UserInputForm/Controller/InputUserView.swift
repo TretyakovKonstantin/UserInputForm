@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class InputCell: UITableViewCell {
+class InputUserView: UIView{
     
     private let nameTextField: UITextField = {
         var name = UITextField()
@@ -47,15 +47,15 @@ class InputCell: UITableViewCell {
         action!(sender)
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(nameTextField)
-        contentView.addSubview(surnameTextField)
-        contentView.addSubview(birthdateTextField)
-        contentView.addSubview(submitButton)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(nameTextField)
+        addSubview(surnameTextField)
+        addSubview(birthdateTextField)
+        addSubview(submitButton)
         
         (birthdateTextField.inputView as! UIDatePicker).addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-
+        
         self.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
     }
     

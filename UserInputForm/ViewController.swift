@@ -11,6 +11,8 @@ import UIKit
 private let reuseIdentifierInput = "input"
 private let reuseIdentifierUser = "user"
 
+var inputUserView: InputUserView = InputUserView()
+
 var source:[User] = []
 
 class ViewController: UIViewController {
@@ -23,69 +25,60 @@ class ViewController: UIViewController {
     
     override func loadView() {
         view = UITableView()
+        inputUserView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 220)
+        view.addSubview(inputUserView)
+        viewAsTable.tableHeaderView = inputUserView
+
+        inputUserView.setButtonAction(action: addUserButtonAction)
+       
         view.backgroundColor = .white
         
     }
     
+    @objc func addUserButtonAction(sender: UIButton!) {
+        let (surname, name, birthDate) = inputUserView.textFieldValues()
+
+        guard !surname.isEmpty && !birthDate.isEmpty else {
+            return
+        }
+
+        let user = User(surname: surname, birthDate: birthDate)
+        if !name.isEmpty {
+            user.name = name
+        }
+        source += [user]
+        inputUserView.emptyAllTextFields()
+        viewAsTable.reloadData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         viewAsTable.register(UserCell.self, forCellReuseIdentifier: reuseIdentifierUser)
-        viewAsTable.register(InputCell.self, forCellReuseIdentifier: reuseIdentifierInput)
-
         viewAsTable.dataSource = self
     }
 }
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : source.count
+        return source.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: indexPath.section == 0 ? reuseIdentifierInput : reuseIdentifierUser, for: indexPath)
-        
-        switch indexPath.section {
-        case 0:
-            let inputCell = cell as! InputCell
-            
-            inputCell.setButtonAction(action: addUserButtonAction)
-            break
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierUser, for: indexPath)
     
-        case 1:
-            let userCell = cell as! UserCell
-            let user = source[indexPath.row]
-            if (user.name == nil) {
-                userCell.fillInFields(surname: user.surname, dateOfBirth: user.birthDate)
-            } else {
-                userCell.fillInFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
-            }
-        default:
-            break
+        let userCell = cell as! UserCell
+        let user = source[indexPath.row]
+        if (user.name == nil) {
+            userCell.fillInFields(surname: user.surname, dateOfBirth: user.birthDate)
+        } else {
+            userCell.fillInFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
         }
+        
         return cell
     }
     
-    @objc func addUserButtonAction(sender: UIButton!) {
-        let inputView = viewAsTable.cellForRow(at: IndexPath(row: 0, section: 0)) as! InputCell
-        let (surname, name, birthDate) = inputView.textFieldValues()
-        
-        guard !surname.isEmpty && !birthDate.isEmpty else {
-            return
-        }
-        
-        let user = User(surname: surname, birthDate: birthDate)
-        if !name.isEmpty {
-            user.name = name
-        }
-        source += [user]
-        inputView.emptyAllTextFields()
-        viewAsTable.reloadData()
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 }
 
