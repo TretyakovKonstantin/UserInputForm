@@ -28,17 +28,20 @@ class ViewController: UIViewController {
         inputUserView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 220)
         view.addSubview(inputUserView)
         viewAsTable.tableHeaderView = inputUserView
-        inputUserView.setButtonAction(action: handlePress)
+        inputUserView.setButtonAction(action: addUserButtonAction)
         view.backgroundColor = .white
-        
         viewModel.deserializeData()
-        
     }
     
     @objc func addUserButtonAction(sender: UIButton!) {
         let (surname, name, birthDate) = inputUserView.textFieldValues()
-
+        
         guard !surname.isEmpty && !birthDate.isEmpty else {
+            let message = surname.isEmpty ? "Please, fill surname field" : "Please, fill birthday field"
+            let c = UIAlertController(title: message, message: "Can't see that because of allertAction", preferredStyle: .actionSheet)
+            c.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            let newNavigationController = UINavigationController(rootViewController: c)
+            navigationController?.present(newNavigationController, animated: true, completion: nil)
             return
         }
 
@@ -51,19 +54,9 @@ class ViewController: UIViewController {
     }
     
     
-    @objc func handlePress(sender: UIButton!) {
-        //        var c = UIAlertController(title: "hey", message: "message", preferredStyle: .alert)
-        //        c.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        if presentingViewController == nil {
-        print("Hello, world")
+    func handleUserCellPress(index: Int) {
         let c = UserCardViewController()
-        let newNavigationController = UINavigationController(rootViewController: c)
         navigationController?.pushViewController(c, animated: true)
-
-//        }
-//        else {
-//            hideModal()
-//        }
     }
     
     @objc func hideModal() {
@@ -102,6 +95,9 @@ extension ViewController: UITableViewDataSource {
 }
 
 extension ViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        handleUserCellPress(index: indexPath.row)
+    }
 }
 
