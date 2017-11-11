@@ -7,7 +7,19 @@
 //
 
 import Foundation
+private var dataContext = DataContext()
 
-func getData()->[User] {
-    return []
+class ViewModel {
+    func getData(index: Int)->User {
+        return dataContext.getUsers()[index]
+    }
+    
+    func addData(user: User) {
+        dataContext.addUser(user: user)
+    }
+    
+    func getDataCount() ->Int {
+        return dataContext.getUsers().count
+    }
 }
+

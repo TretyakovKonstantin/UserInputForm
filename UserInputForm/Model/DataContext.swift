@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+private var users:[User] = []
+
+class DataContext {
+    func getUsers()->[User] {
+        return users
+    }
+    
+    func addUser(user: User) {
+        users += [user]
+    }
+}

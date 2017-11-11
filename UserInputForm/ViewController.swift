@@ -13,7 +13,7 @@ private let reuseIdentifierUser = "user"
 
 var inputUserView: InputUserView = InputUserView()
 
-var source:[User] = []
+var viewModel = ViewModel()
 
 class ViewController: UIViewController {
     
@@ -42,11 +42,9 @@ class ViewController: UIViewController {
             return
         }
 
-        let user = User(surname: surname, birthDate: birthDate)
-        if !name.isEmpty {
-            user.name = name
-        }
-        source += [user]
+        let user = User(surname: surname, name: name, birthDate: birthDate)
+        viewModel.addData(user: user)
+        
         inputUserView.emptyAllTextFields()
         viewAsTable.reloadData()
     }
@@ -60,15 +58,15 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return source.count
+        return viewModel.getDataCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierUser, for: indexPath)
     
         let userCell = cell as! UserCell
-        let user = source[indexPath.row]
-        if (user.name == nil) {
+        let user = viewModel.getData(index: indexPath.row)
+        if (user.name == nil || user.name == "") {
             userCell.fillInFields(surname: user.surname, dateOfBirth: user.birthDate)
         } else {
             userCell.fillInFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
