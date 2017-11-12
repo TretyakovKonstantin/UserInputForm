@@ -53,7 +53,6 @@ class ViewController: UIViewController {
         viewModel.serializeData()
     }
     
-    
     func handleUserCellPress(index: Int) {
         let c = UserCardViewController(dataContext: viewModel.dataContext, userIndex: index)
         navigationController?.pushViewController(c, animated: true)
@@ -93,8 +92,6 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Row selected")
-        print(indexPath.row)
         handleUserCellPress(index: indexPath.row)
     }
 }

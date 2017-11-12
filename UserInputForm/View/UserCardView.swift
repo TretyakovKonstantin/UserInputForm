@@ -7,40 +7,58 @@
 //
 
 import UIKit
-
+let fontsize = CGFloat(integerLiteral: 20)
 
 class UserCardView: UIView {
     
-    private var image = UILabel()
-    private var nameLabel = UILabel()
-    private var surnameLabel = UILabel()
-    private var birthdayLabel = UILabel()
+    private var imageView: UIImageView {
+        let image = UIImageView()
+        return image
+    }
+    
+    private var nameLabel: UILabel = {
+        let name = UILabel()
+        name.font = name.font.withSize(fontsize)
+        name.text = "name: "
+        return name
+    }()
+    
+    private var surnameLabel: UILabel = {
+        let surname = UILabel()
+        surname.font = surname.font.withSize(fontsize)
+        surname.text = "surname: "
+        return surname
+    }()
+    
+    private var birthdayLabel: UILabel = {
+        let birthday = UILabel()
+        birthday.font = birthday.font.withSize(fontsize)
+        birthday.text = "date of birth: "
+        return birthday
+    }()
    
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        if let filePath = Bundle.main.path(forResource: "imageName", ofType: "jpg"), let image = UIImage(contentsOfFile: filePath) {
-//            self.image = image
-//        }
+        
         addSubview(nameLabel)
         addSubview(surnameLabel)
         addSubview(birthdayLabel)
-        addSubview(image)
-        
-        image.backgroundColor = .red
+        addSubview(imageView)
     }
     
     func setFields(surname: String, name: String?, birthday: String) {
-        surnameLabel.text = surname
-        nameLabel.text = name
-        birthdayLabel.text = birthday
+        surnameLabel.text! += surname
+        nameLabel.text! += name!
+        birthdayLabel.text! += birthday
     }
     
     override var frame: CGRect {
         didSet {
-            image.frame = CGRect(x: 20, y: 20, width: 300, height: 300)
-            surnameLabel.frame = CGRect(x: 20, y: 320, width: 300, height: 30)
-            nameLabel.frame = CGRect(x: 20, y: 370, width: 300, height: 30)
-            birthdayLabel.frame = CGRect(x:20, y:420, width: 300, height: 30)
+            let contentWidth = self.frame.size.width - 40
+            imageView.frame = CGRect(x: 20, y: 80, width: contentWidth, height: 300)
+            surnameLabel.frame = CGRect(x: 20, y: 400, width: contentWidth, height: 30)
+            nameLabel.frame = CGRect(x: 20, y: 450, width: contentWidth, height: 30)
+            birthdayLabel.frame = CGRect(x:20, y:500, width: contentWidth, height: 30)
         }
     }
     
