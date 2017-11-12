@@ -10,8 +10,7 @@ import Foundation
 
 
 class ViewModel {
-    
-    private var dataContext = DataContext()
+    private(set) var dataContext = DataContext()
     private var serializeService = SerializeService()
     
     func getData(index: Int) -> User {

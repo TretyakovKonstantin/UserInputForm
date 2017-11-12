@@ -55,18 +55,15 @@ class ViewController: UIViewController {
     
     
     func handleUserCellPress(index: Int) {
-        let c = UserCardViewController()
+        let c = UserCardViewController(dataContext: viewModel.dataContext, userIndex: index)
         navigationController?.pushViewController(c, animated: true)
-    }
-    
-    @objc func hideModal() {
-        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewAsTable.register(UserCell.self, forCellReuseIdentifier: reuseIdentifierUser)
         viewAsTable.dataSource = self
+        viewAsTable.delegate = self
     }
 }
 
@@ -96,6 +93,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Row selected")
         print(indexPath.row)
         handleUserCellPress(index: indexPath.row)
     }

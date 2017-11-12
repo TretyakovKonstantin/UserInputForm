@@ -1,9 +1,10 @@
-import Foundation
+import UIKit
 
 class User: Codable {
     var name: String?
     var surname: String
     var birthDate: String
+//    var photo: UIImage
     
 //    init(surname: String, birthDate: String) {
 //        self.surname = surname
@@ -14,5 +15,6 @@ class User: Codable {
         self.name = name
         self.birthDate = birthDate
         self.surname = surname
+//        self.photo = photo
     }
 }
