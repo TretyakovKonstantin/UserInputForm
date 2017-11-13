@@ -36,7 +36,6 @@ class UserCardView: UIView {
         birthday.text = "date of birth: "
         return birthday
     }()
-   
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -53,12 +52,15 @@ class UserCardView: UIView {
     }
     
     override var frame: CGRect {
+        
         didSet {
-            let contentWidth = self.frame.size.width - 40
-            imageView.frame = CGRect(x: 20, y: 80, width: contentWidth, height: 300)
-            surnameLabel.frame = CGRect(x: 20, y: 400, width: contentWidth, height: 30)
-            nameLabel.frame = CGRect(x: 20, y: 450, width: contentWidth, height: 30)
-            birthdayLabel.frame = CGRect(x:20, y:500, width: contentWidth, height: 30)
+            let contentDistance = 20
+            let contentWidth = Int(self.frame.size.width) - 2 * contentDistance
+            
+            imageView.frame = CGRect(x: contentDistance, y: 80, width: contentWidth, height: 300)
+            surnameLabel.frame = CGRect(x: contentDistance, y: 400, width: contentWidth, height: 30)
+            nameLabel.frame = CGRect(x: contentDistance, y: 450, width: contentWidth, height: 30)
+            birthdayLabel.frame = CGRect(x: contentDistance, y:500, width: contentWidth, height: 30)
         }
     }
     

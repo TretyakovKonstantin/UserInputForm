@@ -7,6 +7,7 @@
 //
 
 import UIKit
+var formatter: DateFormatter = DateFormatter()
 class InputUserView: UIView {
     
     private let nameTextField: UITextField = {
@@ -23,46 +24,71 @@ class InputUserView: UIView {
         return surname
     }()
     
-    private var birthdateTextField:UITextField = {
+    private var birthdateTextField: UITextField = {
         let birthdate = UITextField()
         birthdate.borderStyle = .roundedRect
         birthdate.placeholder = "date of birth"
         
         let birthdayPicker = UIDatePicker()
         birthdayPicker.datePickerMode = .date
+        formatter.dateFormat = "dd.MM.yyyy"
         birthdate.inputView = birthdayPicker
+        birthdayPicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        birthdate.addTarget(self, action: #selector(setDateOnTextField), for: UIControlEvents.editingDidBegin)
         return birthdate
     }()
     
-    private var submitButton:UIButton = {
+    @objc func setDateOnTextField(textField: UITextField) {
+        textField.text = formatter.string(for: (textField.inputView as! UIDatePicker).date)
+    }
+    
+    private var submitButton: UIButton = {
         let submit = UIButton()
         submit.backgroundColor = .blue
         submit.setTitle("addUser", for: .normal)
         return submit
     }()
-
-    private var action: ((UIButton)->())?
     
-    @objc private func addUserButtonAction(sender: UIButton!) {
-        action!(sender)
+    private var takePhotoButton: UIButton = {
+        let takePhoto = UIButton()
+        takePhoto.backgroundColor = .blue
+        takePhoto.setTitle("take photo", for: .normal)
+        return takePhoto
+    }()
+
+    @objc private var submitButtonAction: ((UIButton)->())?
+    @objc private var takePhotoButtonAction: ((UIButton)->())?
+    
+    @objc private func addSubmitButtonAction(sender: UIButton!) {
+        submitButtonAction!(sender)
+    }
+
+    @objc private func addTakePhotoButtonAction(sender: UIButton!) {
+        takePhotoButtonAction!(sender)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         addSubview(nameTextField)
         addSubview(surnameTextField)
         addSubview(birthdateTextField)
         addSubview(submitButton)
-        
-        (birthdateTextField.inputView as! UIDatePicker).addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+        addSubview(takePhotoButton)
         
         self.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
     }
     
-    func setButtonAction(action: @escaping (UIButton!)->()) {
-        self.action = action
-        submitButton.addTarget(self, action: #selector(addUserButtonAction), for: .touchDown)
-        
+    func setSubmitButtonAction(action: @escaping (UIButton!)->()) {
+        self.submitButtonAction = action
+//        submitButton.addTarget(self, action: #selector(setter: submitButtonAction), for: .touchDown)
+        submitButton.addTarget(self, action: #selector(addSubmitButtonAction), for: .touchDown)
+    }
+    
+    func setTakePhotoButtonAction(action: @escaping (UIButton!)->()) {
+        self.takePhotoButtonAction = action
+        takePhotoButton.addTarget(self, action: #selector(addTakePhotoButtonAction
+            ), for: .touchDown)
     }
     
     func emptyAllTextFields() {
@@ -80,17 +106,23 @@ class InputUserView: UIView {
     }
     
     @objc func dateChanged(_ sender: UIDatePicker) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
+        print("Helo")
         birthdateTextField.text = formatter.string(from: sender.date)
     }
     
     override var frame: CGRect {
         didSet {
-            nameTextField.frame = CGRect(x: 20, y: 20, width: 360, height: 30)
-            surnameTextField.frame = CGRect(x: 20, y: 70, width: 360, height: 30)
-            birthdateTextField.frame = CGRect(x: 20, y: 120, width: 360, height: 30)
-            submitButton.frame = CGRect(x: 120, y: 170, width: 160, height: 30)
+            let frameWidth = Int(self.frame.size.width)
+            let contentDistance = 20
+            let standartHeight = 30
+            let contentWidth = frameWidth - 2 * contentDistance
+            let buttonWidth = (frameWidth - 3 * contentDistance) / 2
+            
+            nameTextField.frame = CGRect(x: contentDistance, y: 20, width: contentWidth, height: standartHeight)
+            surnameTextField.frame = CGRect(x: contentDistance, y: 70, width: contentWidth, height: standartHeight)
+            birthdateTextField.frame = CGRect(x: contentDistance, y: 120, width: contentWidth, height: standartHeight)
+            submitButton.frame = CGRect(x: contentDistance, y: 170, width: buttonWidth, height: standartHeight)
+            takePhotoButton.frame = CGRect(x: buttonWidth + 2 * contentDistance, y: 170, width: buttonWidth, height: standartHeight)
         }
     }
     

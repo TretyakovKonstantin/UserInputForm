@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifierInput = "input"
+//private let reuseIdentifierInput = "input"
 private let reuseIdentifierUser = "user"
 
 var inputUserView: InputUserView = InputUserView()
@@ -16,6 +16,7 @@ var inputUserView: InputUserView = InputUserView()
 var viewModel = ViewModel()
 
 class ViewController: UIViewController {
+    var myImg: UIImageView = UIImageView()
     
     var viewAsTable: UITableView {
         get {
@@ -28,7 +29,8 @@ class ViewController: UIViewController {
         inputUserView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 220)
         view.addSubview(inputUserView)
         viewAsTable.tableHeaderView = inputUserView
-        inputUserView.setButtonAction(action: addUserButtonAction)
+        inputUserView.setSubmitButtonAction(action: addUserButtonAction)
+        inputUserView.setTakePhotoButtonAction(action: takePhoto)
         view.backgroundColor = .white
         viewModel.deserializeData()
     }
@@ -38,7 +40,7 @@ class ViewController: UIViewController {
         
         guard !surname.isEmpty && !birthDate.isEmpty else {
             let message = surname.isEmpty ? "Please, fill surname field" : "Please, fill birthday field"
-            let c = UIAlertController(title: message, message: "Can't see that because of allertAction", preferredStyle: .actionSheet)
+            let c = UIAlertController(title: message, message: "", preferredStyle: .actionSheet)
             c.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             let newNavigationController = UINavigationController(rootViewController: c)
             navigationController?.present(newNavigationController, animated: true, completion: nil)
@@ -87,6 +89,27 @@ extension ViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+}
+
+extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    @objc func takePhoto(_ sender: UIButton!) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            myImg.contentMode = .scaleToFill
+            myImg.image = pickedImage
+        }
+        picker.dismiss(animated: true, completion: nil)
     }
 }
 
