@@ -8,7 +8,6 @@
 
 import UIKit
 
-//private let reuseIdentifierInput = "input"
 private let reuseIdentifierUser = "user"
 
 var inputUserView: InputUserView = InputUserView()
@@ -83,7 +82,6 @@ extension ViewController: UITableViewDataSource {
         } else {
             userCell.fillInFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
         }
-        
         return cell
     }
     
@@ -94,13 +92,13 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @objc func takePhoto(_ sender: UIButton!) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }
+//            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+//            imagePicker.allowsEditing = false
+//            self.present(imagePicker, animated: true, completion: nil)
+//        }
         
     }
     
