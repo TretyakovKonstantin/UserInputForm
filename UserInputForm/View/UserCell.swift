@@ -12,7 +12,10 @@ class UserCell: UITableViewCell {
     private let surName = UILabel()
     private let birthDateLabel = UILabel()
     private var nameLabel = UILabel()
-    private var isExpanded = false
+    private let userImageView = UIImageView()
+    
+    private var hasSurname = false
+    private var hasPicture = false
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,15 +36,16 @@ class UserCell: UITableViewCell {
     func fillInFields(surname: String, name: String, dateOfBirth: String) {
         fillInFields(surname: surname, dateOfBirth: dateOfBirth)
         nameLabel.text = name
-        isExpanded = true
+        hasSurname = true
     }
     
     override var frame: CGRect {
+        
         didSet {
             var birthdayLabelY = 0
-            surName.frame = CGRect(x: 20, y: 0, width: 150, height: 30)
-            if (isExpanded) {
-                nameLabel.frame = CGRect(x: 20, y: 40, width: 150, height: 30)
+            surName.frame = CGRect(x: 100, y: 0, width: 150, height: 30)
+            if (hasSurname) {
+                nameLabel.frame = CGRect(x: 100, y: 40, width: 150, height: 30)
                 birthdayLabelY = 20
             }
             birthDateLabel.frame = CGRect(x: frame.width - 170, y: CGFloat(birthdayLabelY), width: 150, height: 30)
@@ -49,7 +53,7 @@ class UserCell: UITableViewCell {
     }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        if isExpanded {
+        if hasSurname {
             return CGSize(width: size.width, height: size.height + 80)
         } else {
             return size

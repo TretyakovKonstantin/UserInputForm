@@ -15,7 +15,6 @@
 		CE2ED9F21FB7535500F0A702 /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2ED9F11FB7535500F0A702 /* UserCardView.swift */; };
 		CE2ED9F41FB76F9C00F0A702 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2ED9F31FB76F9C00F0A702 /* UserCardViewController.swift */; };
 		CE4424781FB840BF00669BD6 /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4424771FB840BE00669BD6 /* UserCardViewModel.swift */; };
-		CE44247A1FBB541F00669BD6 /* MockCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4424791FBB541F00669BD6 /* MockCamera.swift */; };
 		CE8DF9781FAE4E3A002F900C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DF9771FAE4E3A002F900C /* AppDelegate.swift */; };
 		CE8DF97A1FAE4E3A002F900C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8DF9791FAE4E3A002F900C /* ViewController.swift */; };
 		CE8DF97D1FAE4E3A002F900C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8DF97B1FAE4E3A002F900C /* Main.storyboard */; };
@@ -33,7 +32,6 @@
 		CE2ED9F11FB7535500F0A702 /* UserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
 		CE2ED9F31FB76F9C00F0A702 /* UserCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		CE4424771FB840BE00669BD6 /* UserCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewModel.swift; sourceTree = "<group>"; };
-		CE4424791FBB541F00669BD6 /* MockCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCamera.swift; sourceTree = "<group>"; };
 		CE8DF9741FAE4E3A002F900C /* UserInputForm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserInputForm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8DF9771FAE4E3A002F900C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE8DF9791FAE4E3A002F900C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 				CE8DF97E1FAE4E3A002F900C /* Assets.xcassets */,
 				CE8DF9801FAE4E3A002F900C /* LaunchScreen.storyboard */,
 				CE8DF9831FAE4E3A002F900C /* Info.plist */,
-				CE4424791FBB541F00669BD6 /* MockCamera.swift */,
 			);
 			path = UserInputForm;
 			sourceTree = "<group>";
@@ -200,7 +197,6 @@
 				CE8DF9781FAE4E3A002F900C /* AppDelegate.swift in Sources */,
 				CE2ED9F41FB76F9C00F0A702 /* UserCardViewController.swift in Sources */,
 				CE8DF98B1FAF215B002F900C /* User.swift in Sources */,
-				CE44247A1FBB541F00669BD6 /* MockCamera.swift in Sources */,
 				CE2ED9EE1FB642E600F0A702 /* ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
