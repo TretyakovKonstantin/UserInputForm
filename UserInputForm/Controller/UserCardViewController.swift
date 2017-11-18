@@ -19,10 +19,10 @@ class UserCardViewController: UIViewController  {
         }
     }
     
-    init(dataContext: DataContext, userIndex: Int) {
-        userCardViewModel = UserCardViewModel(dataContext: dataContext)
+    init(dataContext: DataContext, serializeService: SerializeService, userIndex: Int) {
+        userCardViewModel = UserCardViewModel(dataContext: dataContext, serializeService: serializeService)
         currentUserIndex = userIndex
-        super.init(nibName: "PhotoDetailViewController2", bundle: nil)
+        super.init(nibName: "UserCardViewController", bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,7 +32,7 @@ class UserCardViewController: UIViewController  {
     override func loadView() {
         view = UserCardView()
         let userProperties: (surname: String, name: String?, birthday: String) = userCardViewModel.getUserPropertiesForIndex(index: currentUserIndex)
-        viewAsCard.setFields(surname: userProperties.surname, name: userProperties.name, birthday: userProperties.birthday)
+        viewAsCard.setFields(surname: userProperties.surname, name: userProperties.name, birthday: userProperties.birthday, image: userCardViewModel.loadImage(index: currentUserIndex))
         view.backgroundColor = .white
     }
 }

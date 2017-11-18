@@ -9,17 +9,20 @@
 import UIKit
 
 class UserCell: UITableViewCell {
-    private let surName = UILabel()
+    private let surnameLabel = UILabel()
     private let birthDateLabel = UILabel()
     private var nameLabel = UILabel()
-    private let userImageView = UIImageView()
+    private var contentHeight = 0
     
-    private var hasSurname = false
-    private var hasPicture = false
+    let userImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(surName)
+        contentView.addSubview(surnameLabel)
         contentView.addSubview(birthDateLabel)
         contentView.addSubview(nameLabel)
     }
@@ -28,36 +31,40 @@ class UserCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fillInFields(surname: String, dateOfBirth: String) {
-        surName.text = surname
-        birthDateLabel.text = dateOfBirth
-    }
-    
-    func fillInFields(surname: String, name: String, dateOfBirth: String) {
-        fillInFields(surname: surname, dateOfBirth: dateOfBirth)
+    func fillInFields(surname: String, name: String?, dateOfBirth: String, image: UIImage?) {
+        surnameLabel.text = surname
         nameLabel.text = name
-        hasSurname = true
+        birthDateLabel.text = dateOfBirth
+        userImageView.image = image
+        if (name != nil && name != "") || image != nil {
+            contentHeight = 80
+        }
     }
     
     override var frame: CGRect {
-        
         didSet {
+            let space = 10
+            let imageSize = 60
+            let labelWidth = 150
+            let labelHeight = 30
             var birthdayLabelY = 0
-            surName.frame = CGRect(x: 100, y: 0, width: 150, height: 30)
-            if (hasSurname) {
-                nameLabel.frame = CGRect(x: 100, y: 40, width: 150, height: 30)
+            var spaceBeforeLabels = 10
+            
+            if surnameLabel.text != nil && surnameLabel.text! != "" {
                 birthdayLabelY = 20
             }
-            birthDateLabel.frame = CGRect(x: frame.width - 170, y: CGFloat(birthdayLabelY), width: 150, height: 30)
+            if userImageView.image != nil {
+                spaceBeforeLabels = 80
+            }
+            surnameLabel.frame = CGRect(x: spaceBeforeLabels, y: 0, width: labelWidth, height: labelHeight)
+            nameLabel.frame = CGRect(x: spaceBeforeLabels, y: 40, width: labelWidth, height: labelHeight)
+            userImageView.frame = CGRect(x:space, y: 20, width: imageSize, height: imageSize)
+            birthDateLabel.frame = CGRect(x: Int(frame.width) - (labelWidth + space), y: birthdayLabelY, width: labelWidth, height: labelHeight)
         }
     }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        if hasSurname {
-            return CGSize(width: size.width, height: size.height + 80)
-        } else {
-            return size
-        }
+        return CGSize(width: size.width, height: CGFloat(contentHeight))
     }
 }
 

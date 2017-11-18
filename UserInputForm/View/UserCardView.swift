@@ -45,10 +45,11 @@ class UserCardView: UIView {
         addSubview(imageView)
     }
     
-    func setFields(surname: String, name: String?, birthday: String) {
+    func setFields(surname: String, name: String?, birthday: String, image: UIImage?) {
         surnameLabel.text! += surname
         nameLabel.text! += name!
         birthdayLabel.text! += birthday
+        imageView.image = image
     }
     
     override var frame: CGRect {

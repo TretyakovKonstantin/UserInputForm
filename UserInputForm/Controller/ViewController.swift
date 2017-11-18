@@ -13,13 +13,13 @@ class ViewController: UIViewController {
     
     var inputUserView = InputUserView()
     var userTableView = UITableView()
-    var viewModel = ViewModel()
-    var imagePicker = UIImagePickerController()
+    let viewModel: ViewModel = ViewModel(dataContext: DataContext(), serializeService: SerializeService())
     
-    var imageView: UIImageView! = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    var imagePicker: UIImagePickerController = {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .savedPhotosAlbum;
+        imagePicker.allowsEditing = false
+        return imagePicker
     }()
     
     override func loadView() {
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         inputUserView.setSubmitButtonAction(action: addUserButtonAction)
         inputUserView.setTakePhotoButtonAction(action: takePhoto)
         view.backgroundColor = .white
-        viewModel.deserializeData()
+        viewModel.loadData()
         print(frameWidth)
 
     }
@@ -57,12 +57,12 @@ class ViewController: UIViewController {
         
         inputUserView.emptyAllTextFields()
         userTableView.reloadData()
-        viewModel.serializeData()
+        viewModel.saveData()
     }
     
     func handleUserCellPress(index: Int) {
-        let c = UserCardViewController(dataContext: viewModel.dataContext, userIndex: index)
-        navigationController?.pushViewController(c, animated: true)
+        let userCardViewController = UserCardViewController(dataContext: viewModel.dataContext, serializeService: viewModel.serializeService, userIndex: index)
+        navigationController?.pushViewController(userCardViewController, animated: true)
     }
     
     override func viewDidLoad() {
@@ -70,25 +70,23 @@ class ViewController: UIViewController {
         userTableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifierUser)
         userTableView.dataSource = self
         userTableView.delegate = self
+        imagePicker.delegate = self
     }
 }
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getDataCount()
+        return viewModel.getUsersCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierUser, for: indexPath)
     
         let userCell = cell as! UserCell
-        let user = viewModel.getData(index: indexPath.row)
+        let user = viewModel.getUser(index: indexPath.row)
         
-        if (user.name == nil || user.name == "") {
-            userCell.fillInFields(surname: user.surname, dateOfBirth: user.birthDate)
-        } else {
-            userCell.fillInFields(surname: user.surname, name: user.name!, dateOfBirth: user.birthDate)
-        }
+        userCell.fillInFields(surname: user.surname, name: user.name, dateOfBirth: user.birthDate, image: viewModel.loadImage(index: indexPath.row))
+        
         return cell
     }
 }
@@ -98,10 +96,6 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
     @objc func takePhoto(_ sender: UIButton!) {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
             
-            imagePicker.delegate = self
-            imagePicker.sourceType = .savedPhotosAlbum;
-            imagePicker.allowsEditing = false
-            
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
@@ -110,7 +104,8 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
         self.dismiss(animated: true, completion: { () -> Void in
             
         })
-        imageView.image = image
+        
+        viewModel.saveImage(image: image)
     }
 }
 

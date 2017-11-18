@@ -6,7 +6,7 @@
 //  Copyright © 2017 Studio Mobile. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
 let url = URL(fileURLWithPath: documentsPath + "/users.json")
@@ -16,6 +16,16 @@ class SerializeService {
     
     func encodeUsers(users: [User]) {
         try! JSONEncoder().encode(users).write(to: url)
+    }
+    
+    func saveImage(image: UIImage, index: Int) {
+        let imageURL = URL(fileURLWithPath: documentsPath + "/userImage\(index).jpg")
+        try! UIImageJPEGRepresentation(image, 1.0)?.write(to: imageURL)
+    }
+    
+    func loadImage(index: Int) -> UIImage? {
+        let imageURL = URL(fileURLWithPath: documentsPath + "/userImage\(index).jpg")
+        return UIImage(contentsOfFile: imageURL.path)
     }
     
     func decodeUsers()->[User] {

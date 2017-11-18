@@ -9,10 +9,16 @@
 import UIKit
 
 class UserCardViewModel {
-    var dataContext: DataContext
+    let dataContext: DataContext
+    let serializeService: SerializeService
     
-    init(dataContext: DataContext) {
+    init(dataContext: DataContext, serializeService: SerializeService) {
         self.dataContext = dataContext
+        self.serializeService = serializeService
+    }
+    
+    func loadImage(index: Int) -> UIImage? {
+        return serializeService.loadImage(index: index)
     }
     
     func getUserPropertiesForIndex(index: Int)->(String, String?, String) {

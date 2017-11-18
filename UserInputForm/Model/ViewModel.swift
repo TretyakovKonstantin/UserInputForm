@@ -1,39 +1,43 @@
-//
-//  ViewModel.swift
-//  UserInputForm
-//
-//  Created by sm-user on 10.11.2017.
-//  Copyright © 2017 Studio Mobile. All rights reserved.
-//
-
-import Foundation
-
+import UIKit
 
 class ViewModel {
-    private(set) var dataContext = DataContext()
-    private var serializeService = SerializeService()
+    let dataContext: DataContext
+    let serializeService: SerializeService
     
-    func getData(index: Int) -> User {
-        return dataContext.getUsers()[index]
+    init(dataContext: DataContext, serializeService: SerializeService) {
+        self.dataContext = dataContext
+        self.serializeService = serializeService
     }
     
-    func getData() -> [User] {
+    func getUser(index: Int) -> User {
+        return getUsers()[index]
+    }
+    
+    func getUsers() -> [User] {
         return dataContext.getUsers()
+    }
+    
+    func saveImage(image: UIImage) {
+        serializeService.saveImage(image: image, index: getUsersCount())
+    }
+    
+    func loadImage(index: Int) -> UIImage? {
+        return serializeService.loadImage(index: index)
     }
     
     func addData(user: User) {
         dataContext.addUser(user: user)
     }
     
-    func getDataCount() ->Int {
+    func getUsersCount() ->Int {
         return dataContext.getUsers().count
     }
     
-    func serializeData() {
+    func saveData() {
         serializeService.encodeUsers(users: dataContext.getUsers())
     }
     
-    func deserializeData() {
+    func loadData() {
         dataContext.addUsers(users: serializeService.decodeUsers())
     }
 }
