@@ -21,6 +21,7 @@ class SerializeService {
     func saveImage(image: UIImage, index: Int) {
         let imageURL = URL(fileURLWithPath: documentsPath + "/userImage\(index).jpg")
         try! UIImageJPEGRepresentation(image, 1.0)?.write(to: imageURL)
+        print("saved photo \(index)")
     }
     
     func loadImage(index: Int) -> UIImage? {

@@ -25,6 +25,7 @@ class UserCell: UITableViewCell {
         contentView.addSubview(surnameLabel)
         contentView.addSubview(birthDateLabel)
         contentView.addSubview(nameLabel)
+        contentView.addSubview(userImageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,18 +48,18 @@ class UserCell: UITableViewCell {
             let imageSize = 60
             let labelWidth = 150
             let labelHeight = 30
-            var birthdayLabelY = 0
+            var birthdayLabelY = 10
             var spaceBeforeLabels = 10
             
             if surnameLabel.text != nil && surnameLabel.text! != "" {
                 birthdayLabelY = 20
             }
             if userImageView.image != nil {
-                spaceBeforeLabels = 80
+                spaceBeforeLabels = 2 * space + imageSize
             }
             surnameLabel.frame = CGRect(x: spaceBeforeLabels, y: 0, width: labelWidth, height: labelHeight)
             nameLabel.frame = CGRect(x: spaceBeforeLabels, y: 40, width: labelWidth, height: labelHeight)
-            userImageView.frame = CGRect(x:space, y: 20, width: imageSize, height: imageSize)
+            userImageView.frame = CGRect(x:space, y: space, width: imageSize, height: imageSize)
             birthDateLabel.frame = CGRect(x: Int(frame.width) - (labelWidth + space), y: birthdayLabelY, width: labelWidth, height: labelHeight)
         }
     }

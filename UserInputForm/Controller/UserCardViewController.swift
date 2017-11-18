@@ -33,6 +33,7 @@ class UserCardViewController: UIViewController  {
         view = UserCardView()
         let userProperties: (surname: String, name: String?, birthday: String) = userCardViewModel.getUserPropertiesForIndex(index: currentUserIndex)
         viewAsCard.setFields(surname: userProperties.surname, name: userProperties.name, birthday: userProperties.birthday, image: userCardViewModel.loadImage(index: currentUserIndex))
+        print("\(currentUserIndex)")
         view.backgroundColor = .white
     }
 }

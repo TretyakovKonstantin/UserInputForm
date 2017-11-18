@@ -95,17 +95,19 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
     
     @objc func takePhoto(_ sender: UIButton!) {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            
+        
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
-        self.dismiss(animated: true, completion: { () -> Void in
-            
-        })
-        
-        viewModel.saveImage(image: image)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        viewModel.saveImage(image: chosenImage)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

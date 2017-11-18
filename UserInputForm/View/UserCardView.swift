@@ -11,10 +11,7 @@ let fontsize = CGFloat(integerLiteral: 20)
 
 class UserCardView: UIView {
     
-    private var imageView: UIImageView {
-        let image = UIImageView()
-        return image
-    }
+    private var imageView = UIImageView()
     
     private var nameLabel: UILabel = {
         let name = UILabel()
@@ -53,15 +50,28 @@ class UserCardView: UIView {
     }
     
     override var frame: CGRect {
-        
         didSet {
             let contentDistance = 20
+            let labelHeight = 30
+            let labelHeightWithSpace = labelHeight + contentDistance
             let contentWidth = Int(self.frame.size.width) - 2 * contentDistance
+            var topBorderDistance = 80
+            let imageHeight = 300
             
-            imageView.frame = CGRect(x: contentDistance, y: 80, width: contentWidth, height: 300)
-            surnameLabel.frame = CGRect(x: contentDistance, y: 400, width: contentWidth, height: 30)
-            nameLabel.frame = CGRect(x: contentDistance, y: 450, width: contentWidth, height: 30)
-            birthdayLabel.frame = CGRect(x: contentDistance, y:500, width: contentWidth, height: 30)
+            if imageView.image != nil {
+                imageView.frame = CGRect(x: contentDistance, y: topBorderDistance, width: contentWidth, height: imageHeight)
+                topBorderDistance += imageHeight
+            }
+            
+            surnameLabel.frame = CGRect(x: contentDistance, y: topBorderDistance, width: contentWidth, height: labelHeight)
+            topBorderDistance += labelHeightWithSpace
+            
+            if nameLabel.text! != "name: " {
+                nameLabel.frame = CGRect(x: contentDistance, y: topBorderDistance, width: contentWidth, height: labelHeight)
+                topBorderDistance += labelHeightWithSpace
+            }
+            
+            birthdayLabel.frame = CGRect(x: contentDistance, y:topBorderDistance, width: contentWidth, height: labelHeight)
         }
     }
     
