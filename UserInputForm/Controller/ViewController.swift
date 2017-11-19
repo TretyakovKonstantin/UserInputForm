@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         }
     }
     private let reuseIdentifierUser = "user"
-    let viewModel: ViewModel
+    var viewModel: ViewModel?
     
     var imagePicker: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         view = MainView()
         
         mainView.assignActions(userButtonAction: addUserButtonAction, takePhotoAction: takePhoto)
-        viewModel.loadData()
+        viewModel!.loadData()
     }
     
     @objc func addUserButtonAction(sender: UIButton!) {
@@ -43,11 +43,11 @@ class ViewController: UIViewController {
         }
 
         let user = User(surname: surname, name: name, birthDate: birthDate)
-        viewModel.addUser(user: user)
+        viewModel!.addUser(user: user)
         
         mainView.inputUserView.emptyAllTextFields()
         mainView.userTableView.reloadData()
-        viewModel.saveData()
+        viewModel!.saveData()
     }
     
     init(dataContext: DataContext, storageService: StorageService) {
@@ -56,12 +56,11 @@ class ViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        viewModel = ViewModel(dataContext: DataContext(), storageService: StorageService())
         super.init(coder: aDecoder)
     }
     
     func handleUserCellPress(index: Int) {
-        let userCardViewController = UserCardViewController(dataContext: viewModel.dataContext, storageService: viewModel.storageService, userIndex: index)
+        let userCardViewController = UserCardViewController(dataContext: viewModel!.dataContext, storageService: viewModel!.storageService, userIndex: index)
         navigationController?.pushViewController(userCardViewController, animated: true)
     }
     
@@ -76,16 +75,16 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getUsersCount()
+        return viewModel!.getUsersCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierUser, for: indexPath)
     
         let userCell = cell as! UserCell
-        let user = viewModel.getUser(index: indexPath.row)
+        let user = viewModel!.getUser(index: indexPath.row)
         
-        userCell.fillInFields(surname: user.surname, name: user.name, dateOfBirth: user.birthDate, image: viewModel.loadImage(index: indexPath.row))
+        userCell.fillInFields(surname: user.surname, name: user.name, dateOfBirth: user.birthDate, image: viewModel!.loadImage(index: indexPath.row))
         
         return cell
     }
@@ -102,7 +101,7 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        viewModel.saveImage(image: chosenImage)
+        viewModel!.saveImage(image: chosenImage)
         dismiss(animated: true, completion: nil)
     }
     
