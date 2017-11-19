@@ -9,11 +9,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let reuseIdentifierUser = "user"
-    
-    var inputUserView = InputUserView()
-    var userTableView = UITableView()
-    let viewModel: ViewModel = ViewModel(dataContext: DataContext(), serializeService: SerializeService())
+    var mainView: MainView {
+        get {
+            return view as! MainView
+        }
+    }
+    private let reuseIdentifierUser = "user"
+    let viewModel: ViewModel
     
     var imagePicker: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
@@ -23,26 +25,14 @@ class ViewController: UIViewController {
     }()
     
     override func loadView() {
-        view = UIView()
-        let frameWidth = Int(UIScreen.main.bounds.width)
-        let frameHeight = Int(UIScreen.main.bounds.height)
-        let inputViewHeight = 220
-        inputUserView.frame = CGRect(x: 0, y: 60, width: frameWidth, height: inputViewHeight)
-        view.addSubview(inputUserView)
-        userTableView.frame = CGRect(x: 0, y: 280, width: frameWidth, height: frameHeight - inputViewHeight)
-        view.addSubview(userTableView)
+        view = MainView()
         
-        
-        inputUserView.setSubmitButtonAction(action: addUserButtonAction)
-        inputUserView.setTakePhotoButtonAction(action: takePhoto)
-        view.backgroundColor = .white
+        mainView.assignActions(userButtonAction: addUserButtonAction, takePhotoAction: takePhoto)
         viewModel.loadData()
-        print(frameWidth)
-
     }
     
     @objc func addUserButtonAction(sender: UIButton!) {
-        let (surname, name, birthDate) = inputUserView.textFieldValues()
+        let (surname, name, birthDate) = mainView.inputUserView.textFieldValues()
         
         guard !surname.isEmpty && !birthDate.isEmpty else {
             let message = surname.isEmpty ? "Please, fill surname field" : "Please, fill birthday field"
@@ -53,23 +43,33 @@ class ViewController: UIViewController {
         }
 
         let user = User(surname: surname, name: name, birthDate: birthDate)
-        viewModel.addData(user: user)
+        viewModel.addUser(user: user)
         
-        inputUserView.emptyAllTextFields()
-        userTableView.reloadData()
+        mainView.inputUserView.emptyAllTextFields()
+        mainView.userTableView.reloadData()
         viewModel.saveData()
     }
     
+    init(dataContext: DataContext, storageService: StorageService) {
+        viewModel = ViewModel(dataContext: dataContext, storageService: storageService)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        viewModel = ViewModel(dataContext: DataContext(), storageService: StorageService())
+        super.init(coder: aDecoder)
+    }
+    
     func handleUserCellPress(index: Int) {
-        let userCardViewController = UserCardViewController(dataContext: viewModel.dataContext, serializeService: viewModel.serializeService, userIndex: index)
+        let userCardViewController = UserCardViewController(dataContext: viewModel.dataContext, storageService: viewModel.storageService, userIndex: index)
         navigationController?.pushViewController(userCardViewController, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userTableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifierUser)
-        userTableView.dataSource = self
-        userTableView.delegate = self
+        mainView.userTableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifierUser)
+        mainView.userTableView.dataSource = self
+        mainView.userTableView.delegate = self
         imagePicker.delegate = self
     }
 }

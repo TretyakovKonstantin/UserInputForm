@@ -19,10 +19,10 @@ class UserCardViewController: UIViewController  {
         }
     }
     
-    init(dataContext: DataContext, serializeService: SerializeService, userIndex: Int) {
-        userCardViewModel = UserCardViewModel(dataContext: dataContext, serializeService: serializeService)
+    init(dataContext: DataContext, storageService: StorageService, userIndex: Int) {
+        userCardViewModel = UserCardViewModel(dataContext: dataContext, storageService: storageService)
         currentUserIndex = userIndex
-        super.init(nibName: "UserCardViewController", bundle: nil)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

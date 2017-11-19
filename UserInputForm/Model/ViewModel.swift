@@ -2,11 +2,11 @@ import UIKit
 
 class ViewModel {
     let dataContext: DataContext
-    let serializeService: SerializeService
+    let storageService: StorageService
     
-    init(dataContext: DataContext, serializeService: SerializeService) {
+    init(dataContext: DataContext, storageService: StorageService) {
         self.dataContext = dataContext
-        self.serializeService = serializeService
+        self.storageService = storageService
     }
     
     func getUser(index: Int) -> User {
@@ -14,31 +14,31 @@ class ViewModel {
     }
     
     func getUsers() -> [User] {
-        return dataContext.getUsers()
+        return dataContext.users
     }
     
     func saveImage(image: UIImage) {
-        serializeService.saveImage(image: image, index: getUsersCount())
+        storageService.saveImage(image: image, index: getUsersCount())
     }
     
     func loadImage(index: Int) -> UIImage? {
-        return serializeService.loadImage(index: index)
+        return storageService.loadImage(index: index)
     }
     
-    func addData(user: User) {
+    func addUser(user: User) {
         dataContext.addUser(user: user)
     }
     
     func getUsersCount() ->Int {
-        return dataContext.getUsers().count
+        return dataContext.users.count
     }
     
     func saveData() {
-        serializeService.encodeUsers(users: dataContext.getUsers())
+        storageService.encodeUsers(users: dataContext.users)
     }
     
     func loadData() {
-        dataContext.addUsers(users: serializeService.decodeUsers())
+        dataContext.addUsers(users: storageService.decodeUsers())
     }
 }
 

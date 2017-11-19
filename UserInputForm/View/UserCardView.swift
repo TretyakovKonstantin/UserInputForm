@@ -11,23 +11,23 @@ let fontsize = CGFloat(integerLiteral: 20)
 
 class UserCardView: UIView {
     
-    private var imageView = UIImageView()
+    private let imageView = UIImageView()
     
-    private var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let name = UILabel()
         name.font = name.font.withSize(fontsize)
         name.text = "name: "
         return name
     }()
     
-    private var surnameLabel: UILabel = {
+    private let surnameLabel: UILabel = {
         let surname = UILabel()
         surname.font = surname.font.withSize(fontsize)
         surname.text = "surname: "
         return surname
     }()
     
-    private var birthdayLabel: UILabel = {
+    private let birthdayLabel: UILabel = {
         let birthday = UILabel()
         birthday.font = birthday.font.withSize(fontsize)
         birthday.text = "date of birth: "

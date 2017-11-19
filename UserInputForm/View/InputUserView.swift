@@ -11,20 +11,20 @@ var formatter: DateFormatter = DateFormatter()
 class InputUserView: UIView {
     
     private let nameTextField: UITextField = {
-        var name = UITextField()
+        let name = UITextField()
         name.borderStyle = .roundedRect
         name.placeholder = "name"
         return name
     }()
     
-    private var surnameTextField: UITextField = {
-        var surname = UITextField()
+    private let surnameTextField: UITextField = {
+        let surname = UITextField()
         surname.borderStyle = .roundedRect
         surname.placeholder = "surname"
         return surname
     }()
     
-    private var birthdateTextField: UITextField = {
+    private let birthdateTextField: UITextField = {
         let birthdate = UITextField()
         birthdate.borderStyle = .roundedRect
         birthdate.placeholder = "date of birth"
@@ -42,14 +42,14 @@ class InputUserView: UIView {
         textField.text = formatter.string(for: (textField.inputView as! UIDatePicker).date)
     }
     
-    private var submitButton: UIButton = {
+    private let submitButton: UIButton = {
         let submit = UIButton()
         submit.backgroundColor = .blue
         submit.setTitle("addUser", for: .normal)
         return submit
     }()
     
-    private var takePhotoButton: UIButton = {
+    private let takePhotoButton: UIButton = {
         let takePhoto = UIButton()
         takePhoto.backgroundColor = .blue
         takePhoto.setTitle("take photo", for: .normal)
@@ -79,13 +79,12 @@ class InputUserView: UIView {
         self.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 250/255, alpha: 1)
     }
     
-    func setSubmitButtonAction(action: @escaping (UIButton!)->()) {
+    func assignSubmitButtonAction(action: @escaping (UIButton!)->()) {
         self.submitButtonAction = action
-//        submitButton.addTarget(self, action: #selector(setter: submitButtonAction), for: .touchDown)
         submitButton.addTarget(self, action: #selector(addSubmitButtonAction), for: .touchDown)
     }
     
-    func setTakePhotoButtonAction(action: @escaping (UIButton!)->()) {
+    func assignTakePhotoButtonAction(action: @escaping (UIButton!)->()) {
         self.takePhotoButtonAction = action
         takePhotoButton.addTarget(self, action: #selector(addTakePhotoButtonAction
             ), for: .touchDown)

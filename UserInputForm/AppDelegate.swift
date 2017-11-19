@@ -12,14 +12,15 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let dataContext = DataContext()
+    let storageService = StorageService()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
         window?.backgroundColor = UIColor.white
         
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        let navigationController = UINavigationController(rootViewController: ViewController(dataContext: dataContext, storageService: storageService))
         window?.rootViewController = navigationController
         
         window?.frame = UIScreen.main.bounds

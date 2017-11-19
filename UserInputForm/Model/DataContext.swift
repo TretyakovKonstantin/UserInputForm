@@ -2,11 +2,7 @@ import Foundation
 
 class DataContext {
     
-    private var users:[User] = []
-    
-    func getUsers()->[User] {
-        return users
-    }
+    private(set) var users:[User] = []
     
     func addUser(user: User) {
         addUsers(users: [user])
